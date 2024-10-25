@@ -38,11 +38,37 @@
         }
 
     </div>
-    <div class="col-12 border p-3">
-        <h3 class="text-primary">Product Table</h3>
-        <hr />
+    <div class="col-12 border p-4">
+        <h2 class="text-success">Product Table</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <td>Product Name</td>
+                    
+                    <td>Price</td>
 
+                    <td>Is Active</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach(var prod in ProductList)
+                {
+                    <tr>
+                        <td><input type="text" @bind="prod.Name" @bind:event="oninput" /></td>
+                        <td><input type="text" @bind="prod.Price" @bind:event="oninput" /></td>
+                        <td><input type="checkbox" @bind="prod.IsActive" @bind:event="oninput" /></td>
+                    </tr>                    
+                }               
+            </tbody>
+        </table>
 
+        <br />
+        <br />
+        <h2>Product Summary</h2>
+        @foreach(var prod in ProductList)
+        {
+            <p>@prod.Name [@prod.Price] is @(prod.IsActive?"Active":"InActive")</p>
+        }
     </div>
 </div>
 
