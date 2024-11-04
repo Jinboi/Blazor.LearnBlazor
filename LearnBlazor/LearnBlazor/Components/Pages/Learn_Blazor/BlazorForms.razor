@@ -6,11 +6,41 @@
         <hr />
     </div>
     <div class="mx-2 px-2">
-        <EditForm FormName="ProductCreate" Model="Product" OnSubmit="HandleProductCreate">
+        <EditForm FormName="ProductCreate" Model="Product" OnValidSubmit="HandleProductCreate">
+            <DataAnnotationsValidator />
+            @* <ValidationSummary/> *@
             <div class="form-group py-2">
                 Product Name
                 <InputText class="form-control" @bind-Value="@Product.Name"/>
+                <ValidationMessage For="@(()=> Product.Name)" />
             </div>
+            <div class="form-group py-2">
+                Price
+                <InputNumber class="form-control" @bind-Value="@Product.Price" />
+                <ValidationMessage For="@(()=> Product.Price)" />
+
+            </div>
+            <div class="form-group py-2">
+                Category
+                <InputSelect class="form-select" @bind-Value="@Product.Category">
+                    @foreach(var cat in Enum.GetValues(typeof(Category)))
+                    {
+                        <option value="@cat">@cat</option>
+                    }
+                </InputSelect>              
+            </div>
+
+            <div class="form-group py-2">
+                IsActive
+                <InputNumber @bind-Value="@Product.IsActive" />   
+            </div>
+
+            <div class="form-group py-2">
+                Available After
+                <InputDate class="form-control" @bind-Value="@Product.AvailableAfter" />
+            </div>
+
+
             <button type="submit" class="btn btn-primary my-3" style="width:200px;">
                 Create Product
             </button>
@@ -20,7 +50,7 @@
 </div>
 
 @code {
-    public Product Product { get; set; } = new Product();
+    public Product Product { get; set; } = new Product(){};
     private bool IsProcessing = false;
 
     private async Task HandleProductCreate()
